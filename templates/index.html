@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Risk Meter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .scale-container {
+            width: 80%;
+            max-width: 600px;
+            height: 30px;
+            background: #ddd;
+            border-radius: 15px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scale-bar {
+            width: 0%; /* Start from 0% */
+            height: 100%;
+            border-radius: 15px;
+            transition: width 2s ease-in-out; /* Animation */
+        }
+
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Heart Disease Risk Meter</h1>
+    <h2 id="risk-text">Risk: 0%</h2>
+
+    <div class="scale-container">
+        <div class="scale-bar" id="scale-bar"></div>
+    </div>
+
+    <div class="labels">
+        <span style="color: green;">Low</span>
+        <span style="color: orange;">Medium</span>
+        <span style="color: red;">High</span>
+    </div>
+
+    <script>
+        // Set the risk value dynamically (Change this value for different risk levels)
+        let riskValue = 85; // Example: Change this dynamically in Flask
+
+        // Get elements
+        let scaleBar = document.getElementById("scale-bar");
+        let riskText = document.getElementById("risk-text");
+
+        // Determine color based on risk level
+        function getColor(value) {
+            if (value <= 40) return "green";
+            else if (value <= 70) return "orange";
+            else return "red";
+        }
+
+        // Animate the scale bar
+        setTimeout(() => {
+            scaleBar.style.width = riskValue + "%";
+            scaleBar.style.background = getColor(riskValue);
+            riskText.innerText = "Risk: " + riskValue + "%";
+        }, 500);
+    </script>
+
+</body>
+</html>

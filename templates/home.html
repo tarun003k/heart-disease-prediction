@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Detection of Heart Disease Through Predictive Machine Learning Models</title>
+    <link rel="stylesheet" href="../static/about.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/256/2167/2167018.png" type="image/icon type">
+    <style>
+        .hero-content {
+            max-width: 900px;
+            padding: 40px 0;
+        }
+        .hero-content h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #B2D8E9;
+            text-transform: uppercase;
+        }
+        .hero-content h2 {
+            font-size: 26px;
+            margin-bottom: 24px;
+            color: white;
+            max-width: 720px;
+        }
+        .hero-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+            max-width: 720px;
+            margin-bottom: 30px;
+        }
+        .btn-cls {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            background: #B2D8E9;
+            color: #0c0c0c;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-radius: 35px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.16);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.18);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .feature-summary {
+            width: 100%;
+            padding: 80px 5%;
+            background: #0c0c0c;
+            color: white;
+            text-align: center;
+        }
+        .feature-summary h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .feature-cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .feature-card {
+            flex: 1 1 280px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 30px;
+            min-width: 260px;
+            text-align: left;
+        }
+        .feature-card h3 {
+            font-size: 24px;
+            color: #B2D8E9;
+            margin-bottom: 16px;
+        }
+        .feature-card p {
+            color: #dfe7f0;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .home-summary {
+            width: 100%;
+            padding: 80px 5%;
+            color: white;
+            text-align: center;
+            background: #0c0c0c;
+        }
+        .home-summary h1 {
+            font-size: 42px;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        .home-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .home-column {
+            flex: 1 1 360px;
+            min-width: 280px;
+            padding: 30px;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 18px;
+            text-align: left;
+        }
+        .home-column h2 {
+            font-size: 26px;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            color: #B2D8E9;
+        }
+        .team-list,
+        .details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #f0f0f0;
+            line-height: 2.2;
+            text-align: left;
+        }
+        .team-list li::before {
+            content: "• ";
+            color: #B2D8E9;
+        }
+        .details-list li {
+            font-size: 18px;
+        }
+        .details-list li span {
+            display: block;
+            margin-top: 4px;
+            color: #bdbdbd;
+        }
+        .footer p {
+            color: #bfbfbf;
+        }
+        @media (max-width: 840px) {
+            .hero-content h1 {
+                font-size: 34px;
+            }
+            .hero-content h2 {
+                font-size: 22px;
+            }
+            .feature-cards,
+            .home-grid {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 500px) {
+            .banner {
+                height: auto;
+            }
+            .hero-content {
+                padding: 20px 0;
+            }
+            .head {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <p class="nav-title">Early Detection of Heart Disease Through Predictive Machine Learning Models</p>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span id="menu-icon">&#9776;</span>
+        </div>
+        <ul class="ls" id="menu">
+            <li><a href="/" class="ancor">Home</a></li>
+            <li><a href="/prediction" class="ancor">Prediction</a></li>
+            <li><a href="/about" class="ancor">Info</a></li>
+            <li><a href="/trends" class="ancor">Trends</a></li>
+            <li><a href="/article" class="ancor">Articles</a></li>
+            <li><a href="/team" class="ancor">Team</a></li>
+        </ul>
+    </nav>
+
+    <section class="banner">
+        <div class="container">
+            <div class="head">
+                <div class="hero-content">
+                    <h1>Welcome to the Early Detection of Heart Disease Through Predictive Machine Learning Models System</h1>
+                    <h2>Use machine learning to check your risk early and take action.</h2>
+                    <p>This web app predicts heart disease risk using health data. Our machine learning model analyzes factors like age, blood pressure, cholesterol, and lifestyle choices to help with early diagnosis and prevention. While it doesn't replace medical advice, it acts as a useful guide for monitoring health.</p>
+                    <div class="btn-cls">
+                        <a href="/prediction" class="btn">Start Prediction</a>
+                        <a href="/about" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-summary">
+        <h2>Why Choose Our System?</h2>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <h3>AI-powered Risk</h3>
+                <p>Our model evaluates clinical and lifestyle factors to generate a clear risk assessment for heart disease.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Fast and Simple</h3>
+                <p>Enter basic health values, get an instant prediction, and download a report for your records.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Team Project</h3>
+                <p>Built by Pragati Engineering College - CSE AI batch 2022-2026 with a focus on healthcare awareness.</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <footer class="footer">
+        <div>
+            <h1>Early Detection of Heart Disease Through Predictive Machine Learning Models</h1>
+            <div class="footer-info">
+                <div>
+                    <h1>Team Members</h1>
+                    <p>VISWANADHAPALLI PAUL MOJESH</p>
+                    <p>KOVVURI JAYA LAKSHMI</p>
+                    <p>THARUN KUMAR MALLADI</p>
+                    <p>DODDIPATLA RAVI TEJA</p>
+                    <p>KARRI RAJESH</p>
+                </div>
+                <div>
+                    <h1>Project Details</h1>
+                    <p>Batch 2022-2026</p>
+                    <p>CSE - Artificial Intelligence</p>
+                    <p>Pragati Engineering College</p>
+                </div>
+            </div>
+            <hr style="margin-top: 4%; border-color: #393E46;">
+            <p style="text-align: center; font-size: 20px; text-transform: uppercase; font-weight: 600;">Batch @ 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            let menu = document.getElementById("menu");
+            let icon = document.getElementById("menu-icon");
+            menu.classList.toggle("active");
+            if (menu.classList.contains("active")) {
+                icon.innerHTML = "&#10006;";
+            } else {
+                icon.innerHTML = "&#9776;";
+            }
+        }
+    </script>
+</body>
+</html>

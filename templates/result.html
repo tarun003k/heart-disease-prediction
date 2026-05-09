@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Detection of Heart Disease Through Predictive Machine Learning Models</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/256/2167/2167018.png" type="image/icon type">
+    <style>
+		html {
+			scroll-behavior: smooth;
+		}
+		
+        body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f4f4f4;
+			text-align: center;
+		}
+		nav {
+			background: #B2D8E9;
+			color: #0c0c0c;
+			padding: 10px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		
+		.nav-title {
+			font-size: 20px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		
+		.menu-icon {
+			display: none;
+			font-size: 24px;
+			cursor: pointer;
+		}
+		
+		.ls {
+			list-style: none;
+			display: flex;
+			padding: 0;
+			font-size: 16px;
+			font-weight: 600;
+		}
+		
+		.ls li {
+			margin: 0 20px;
+		}
+		
+		.ls li a {
+			color:#0c0c0c;
+			text-decoration: none;
+			padding: 5px 10px;
+			transition: background 0.3s;
+		}
+		
+		.ls li a:hover {
+			background: #ffffff;
+			color: #0c0c0c;
+			border-radius: 2px;
+		}
+		
+		
+
+        .scale-container {
+            width: 80%;
+            max-width: 600px;
+            height: 30px;
+            background: #ddd;
+            border-radius: 15px;
+            margin: 0px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scale-bar {
+            width: 0%;
+            height: 100%;
+            border-radius: 15px;
+            transition: width 2s ease-in-out, background 2s ease-in-out;
+        }
+
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            font-weight: bold;
+        }
+		
+		.container {
+            padding: 40px;
+			padding-top: 0px;
+        
+        }
+		.containers h1{
+			font-size:40px;
+			text-transform: uppercase;
+			padding: 3% 1%;
+			background-color: #B2D8E9;
+		}
+        h1, h2 {
+            color:  #0c0c0c;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .k li {
+            
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .section {
+			width: 550px;
+			height: 530px;
+            margin-bottom: 20px;
+			margin-left: 4%;
+			box-shadow: 0 4px 8px 0 #c2c6cc, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			padding: 10px 15px;
+			text-align:start;
+			border-radius: 5px;
+        }
+		.section h2{
+			text-align: center;
+		}
+		.pred1{
+			font-size: 40px;
+			text-transform: uppercase;
+			font-weight: bold;
+		}
+		#pred{
+			font-size: 30px;
+			text-transform: uppercase;
+			margin-bottom: 20px;
+			padding: 0% 2%;
+		}
+		.block{
+			display: flex;
+			justify-content: space-evenly;
+			padding:3% 0px ;
+
+		}
+		.dii{
+			margin: 0;
+			padding: 0;
+			background-color: white;
+		}
+		.section img {
+			width: 100%;
+			height: 240px;
+			object-fit: cover;
+			border-radius: 5px;
+		}
+		.res {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 3% 0%;
+		}
+		.di{
+			padding: 3% 0;
+			background-color:white;
+			box-shadow: 0 4px 8px 0 #c2c6cc, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			width: 50%;
+			height: 56vh;
+			
+		}
+		.di h2{
+			font-size: 25px;
+		}
+		.di .bt{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.di .bt .return {
+			text-decoration: none;
+			padding:8px 30px;
+			background-color: #0c0c0c;
+			color: white;
+			border-radius: 3px;
+			font-size: 17px;
+			margin: 3% 0%;
+			margin-bottom: 0;
+			
+		}
+		.di .bt .return:hover{
+			background-color:#B2D8E9;
+			color: #0c0c0c;
+			transition: 0.4s;
+			font-weight: 700;
+		}
+
+		.di .bt .returnb {
+			text-decoration: none;
+			padding:8px 30px;
+			background-color: #B2D8E9;
+			color: #0c0c0c;
+			border-radius: 3px;
+			font-size: 17px;
+			margin: 3% 0%;
+			margin-bottom: 0;
+			
+		}
+		.di .bt .returnb:hover{
+			background-color:#B2D8E9;
+			color: #0c0c0c;
+			transition: 0.4s;
+			font-weight: 700;
+		}
+		
+		.footer{
+			background-color: #0c0c0c;
+			color: white;
+			width: 100%;
+			height: 60vh;
+			padding: 2% 0px;
+		   }
+		   .footer h1{
+			color: white;
+			font-size: 35px;
+			text-align: center;
+			text-transform: uppercase;
+		   }
+		   .footer .footer-info{
+			display: flex;
+			justify-content: space-around;
+		   }
+		   .footer-info div{
+			padding: 0px ;
+		   }
+		   .footer-info h1{
+			text-align: center;
+			font-size: 30px;
+		   }
+		   .footer-info p{
+			text-align: center;
+			font-size: 17px;
+		   }
+
+		   @media (max-width:820px) {
+			.menu-icon {
+				display: block;
+				z-index: 3;
+				color: #0c0c0c;
+			}
+		
+			.ls {
+				display: none;
+				flex-direction: column;
+				background: #B2D8E9;
+				position: absolute;
+				top: 60px;
+				left: 0;
+				width: 100%;
+				text-align: center;
+				padding: 10px 0;
+			}
+		
+			.ls.active {
+				display: flex;
+			}
+		
+			.ls li {
+				padding: 10px;
+				color: #0c0c0c;
+				border-bottom: 1px solid #B2D8E9;
+			}
+		
+			.ls li:hover {
+				color: white;
+			}
+			
+			.di{
+				padding: 3% 0;
+				background-color:white;
+				box-shadow: 0 4px 8px 0 #c2c6cc, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				width: 80%;
+				height: 42vh;
+				
+			}
+			.section {
+				width: 300px;
+				height: 540px;
+				margin-bottom: 20px;
+				margin-left: 4%;
+				box-shadow: 0 4px 8px 0 #c2c6cc, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				padding: 10px 15px;
+				text-align:start;
+				border-radius: 5px;
+			}
+			.section img{
+
+				width: 250px;
+				height: 170px;
+			}
+			.section h2{
+				text-align: center;
+			}
+			.footer{
+				height: 41vh;
+			}
+			
+		   }
+		   @media (max-width:480px) {
+			.di{
+				padding: 3% 0;
+				background-color:white;
+				box-shadow: 0 4px 8px 0 #c2c6cc, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+				width: 80%;
+				height: 55vh;
+				
+			}
+			.di h2{
+				font-size: 18px;
+			}
+			.pred1{
+				font-size: 25px;
+				text-transform: uppercase;
+				font-weight: bold;
+			}
+			#pred{
+				font-size: 25px;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				padding: 0% 2%;
+			}
+			.block{
+				display: block;
+				padding:2% 0px ;
+	
+			}
+			.containers h1{
+				font-size:25px;
+				text-transform: uppercase;
+				padding: 3% 0%;
+				background-color: #B2D8E9;
+			}
+			.section {
+				width: 300px;
+				height: 540px;
+				margin-bottom: 20px;
+				
+				box-shadow: 0 4px 8px 0 #c2c6cc, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			
+				text-align:start;
+				border-radius: 5px;
+			}
+			.container {
+				padding: 10px;
+				padding-top: 0px;
+			
+			}
+			.footer{
+				height: 85vh;
+			}
+		   }
+		   
+
+    </style>
+</head>
+<body>
+	<nav>
+        <p class="nav-title">Early Detection of Heart Disease Through Predictive Machine Learning Models</p>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span id="menu-icon">&#9776;</span> <!-- Default Hamburger Icon -->
+        </div>
+        <ul class="ls" id="menu">
+            <li><a href="/" class="ancor">Home</a></li>
+            <li><a href="/about" class="ancor">Info</a></li>
+			<li><a href="/article" class="ancor">Articles</a></li>
+            <li><a href="/team" class="ancor">Team Members</a></li>
+        </ul>
+    </nav>
+    <div class="dii" >
+		<div class="res">
+			<div class="di">
+				<h1 class="pred1">Prediction:</h1>
+				<h1 id="pred"></h1>
+				<h2>Risk percentage: <span id="risk-text"></span></h2>
+				<div class="scale-container">
+					<div class="scale-bar" id="scale-bar"></div>
+				</div>
+			
+				<div class="labels">
+					<span style="color: green;">Low</span>
+					<span style="color: orange;">Medium</span>
+					<span style="color: red;">High</span>
+				</div>
+				<div style="padding: 0% 0%;">
+					<div class="bt">
+						<!-- <a class="scroll" href="#heart-diet">Scroll Down <span style="font-size: 22px; font-weight: bolder; padding-left: 9px;">&#x2193;</span></a> -->
+						<a href="{{ url_for('download_report') }}" class="download-btn returnb">Download Report</a>
+						<!-- <p>Scroll Down For Food Recommendations</p> -->
+					</div>
+					<div class="bt">
+						<!-- <a class="scroll" href="#heart-diet">Scroll Down <span style="font-size: 22px; font-weight: bolder; padding-left: 9px;">&#x2193;</span></a> -->
+						<a class="return" href="/prediction">Return To Prediction</a>
+						<!-- <p>Scroll Down For Food Recommendations</p> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="containers">
+			<h1>Heart-Healthy Diet Recommendations</h1>
+			<div id="heart-diet" class="container">
+				{% if risk_percentage >40 %}
+				<div class="block">
+					<div class="section">
+						<h2>Recommended Foods for Heart Health</h2>
+						<div style="display: flex; justify-content: center; padding: 3% 0px;">
+							<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&h=300&fit=crop" width="400px " height="240px" alt="Healthy heart-friendly foods" style="border-radius: 5px; object-fit: cover;">
+						</div>
+						<ul class="k">
+							<li><strong>High-Fiber Foods:</strong> Whole grains, vegetables, fruits</li>
+							<li><strong>Healthy Fats:</strong> Salmon, nuts, olive oil</li>
+							<li><strong>Lean Proteins:</strong> Skinless poultry, legumes, low-fat dairy</li>
+							<li><strong>Heart-Friendly Beverages:</strong> Green tea, water, fresh vegetable juices</li>
+						</ul>
+					</div>
+					
+					<div class="section">
+						<h2>Foods to Avoid</h2>
+						<div style="display: flex; justify-content: center;">
+							<img src="https://images.unsplash.com/photo-1565958011457-ce63c631a10a?w=500&h=300&fit=crop" width="400px " height="240px" alt="Unhealthy foods to avoid" style="border-radius: 5px; object-fit: cover;">
+						</div>
+						<ul class="k">
+							<li><strong>Saturated & Trans Fats:</strong> Fried foods, processed snacks, red meat</li>
+							<li><strong>Excess Salt:</strong> Canned soups, processed meats</li>
+							<li><strong>Sugary Foods:</strong> White bread, pastries, sugary drinks</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="block">
+					<div class="section">
+						<h2>Heart-Healthy Meal Plan</h2>
+						<div style="display: flex; justify-content: center;">
+							<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=300&fit=crop" width="400px " height="240px" alt="Heart-healthy meal plan with salmon and vegetables" style="border-radius: 5px; object-fit: cover;">
+						</div>
+						<ul class="k">
+							<li><strong>Breakfast:</strong> Oatmeal with flaxseeds and berries + green tea</li>
+							<li><strong>Lunch:</strong> Grilled salmon with quinoa & steamed broccoli</li>
+							<li><strong>Snack:</strong> Walnuts & a banana</li>
+							<li><strong>Dinner:</strong> Grilled chicken with a mixed greens salad</li>
+							<li><strong>Evening Drink:</strong> Warm turmeric milk</li>
+						</ul>
+					</div>
+					
+					<div class="section">
+						<h2>Lifestyle Tips for Heart Health</h2>
+						<div style="display: flex; justify-content: center;">
+							<img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&h=300&fit=crop" width="400px " height="240px" alt="Healthy lifestyle with exercise and meditation" style="border-radius: 5px; object-fit: cover;">
+						</div>
+						<ul class="k">
+							<li>Exercise regularly (30-45 minutes/day)</li>
+							<li>Get enough sleep (7-8 hours per night)</li>
+							<li>Reduce stress (meditation, breathing exercises)</li>
+							<li>Avoid smoking & alcohol</li>
+						</ul>
+					</div>
+				</div>
+				{% else%}
+				<div class="block">
+					<div class="section">
+						<h2>Nutrient-Rich Foods</h2>
+						<div style="display: flex; justify-content: center; padding: 3% 0px;">
+							<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&h=300&fit=crop" width="400px " height="240px" alt="Nutrient-rich foods with fruits and vegetables" style="object-fit: cover; border-radius: 5px;">
+						</div>
+						<ul class="k">
+							<li><strong>Whole Grains:</strong> Brown rice, whole wheat bread, oats</li>
+							<li><strong>Vegetables:</strong> Leafy greens, carrots, broccoli</li>
+							<li><strong>Fruits:</strong> Apples, berries, bananas, citrus fruits</li>
+						</ul>
+					</div>
+					<div class="section">
+						<h2>High-Quality Proteins</h2>
+						<div style="display: flex; justify-content: center; padding: 3% 0px;">
+							<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=300&fit=crop" width="400px " height="240px" alt="High-quality protein sources" style="object-fit: cover; border-radius: 5px;">
+						</div>
+						<ul class="k">
+							<li><strong>Lean Meats:</strong> Chicken, turkey</li>
+							<li><strong>Eggs & Dairy:</strong> Low-fat milk, Greek yogurt</li>
+							<li><strong>Plant-Based Proteins:</strong> Lentils, beans, tofu</li>
+						</ul>
+					</div>
+				</div>
+				<div class="block">
+					<div class="section">
+						<h2>Heart-Healthy Meal Plan</h2>
+						<div style="display: flex; justify-content: center;">
+							<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&h=300&fit=crop" width="400px " height="240px" alt="Heart-healthy meal plan with salmon and vegetables" style="border-radius: 5px; object-fit: cover;">
+						</div>
+						<ul class="k">
+							<li><strong>Breakfast:</strong> Oatmeal with flaxseeds and berries + green tea</li>
+							<li><strong>Lunch:</strong> Grilled salmon with quinoa & steamed broccoli</li>
+							<li><strong>Snack:</strong> Walnuts & a banana</li>
+							<li><strong>Dinner:</strong> Grilled chicken with a mixed greens salad</li>
+							<li><strong>Evening Drink:</strong> Warm turmeric milk</li>
+						</ul>
+					</div>
+					
+					<div class="section">
+						<h2>Lifestyle Tips for Heart Health</h2>
+						<div style="display: flex; justify-content: center;">
+							<img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&h=300&fit=crop" width="400px " height="240px" alt="Healthy lifestyle with exercise and meditation" style="border-radius: 5px; object-fit: cover;">
+						</div>
+						<ul class="k">
+							<li>Exercise regularly (30-45 minutes/day)</li>
+							<li>Get enough sleep (7-8 hours per night)</li>
+							<li>Reduce stress (meditation, breathing exercises)</li>
+							<li>Avoid smoking & alcohol</li>
+						</ul>
+					</div>
+				</div>
+				</div>
+		</div>
+		{% endif %}
+		</div>
+	</div>
+	<div class="footer">
+        <div>
+            <h1>Early Detection of Heart Disease Through Predictive Machine Learning Models</h1>
+            <div class="footer-info">
+                <div>
+                    <h1>Team Members</h1>
+                    <p>VISWANADHAPALLI PAUL MOJESH - [22A31A4359]</p>
+                    <p>KOVVURI JAYA LAKSHMI - [22A31A4309]</p>
+                    <p>THARUN KUMAR MALLADI - [22A31A4357]</p>
+                    <p>DODDIPATLA RAVI TEJA - [22A31A4333]</p>
+                    <p>KARRI RAJESH - [23A35A4307]</p>
+                </div>
+                <div>
+                    <h1>Details</h1>
+                    <p>2022-2026 Batch</p>
+                    <p>CSE - Artificial Intelligence</p>
+                    <p>Pragati Engineering College</p>
+                </div>
+            </div>
+            <hr style="margin-top: 4%; border-color: #393E46;">
+            <p style="text-align: center; font-size: 30px; text-transform: uppercase; font-weight: bold;">Batch@2026</p>
+        </div>
+    </div>
+
+    <script>
+		function toggleMenu() {
+			let menu = document.getElementById("menu");
+			let icon = document.getElementById("menu-icon");
+		
+			menu.classList.toggle("active");
+		
+			if (menu.classList.contains("active")) {
+				icon.innerHTML = "&#10006;";
+			} else {
+				icon.innerHTML = "&#9776;";
+			}
+		}
+        // Get risk percentage from Flask
+		let riskValue = JSON.parse('{{ risk_percentage | tojson }}');
+
+
+        let scaleBar = document.getElementById("scale-bar");
+        let riskText = document.getElementById("risk-text");
+		let pred = document.getElementById("pred");
+
+        function getColor(value) {
+            if (value <= 40) return "green";
+            else if (value <= 60) return "orange";
+            else return "red";
+        }
+		function getPred(value){
+			if (value <=50){
+				return " You Have LOW Chances To Get Heart Disease 😊."
+			}else{
+				return " You Have HIGH Chances To Get Heart Disease 😢"
+			}
+		}
+
+        setTimeout(() => {
+            scaleBar.style.width = riskValue + "%";
+            scaleBar.style.background = getColor(riskValue);
+			pred.innerText = getPred(riskValue);
+			pred.style.color = getColor(riskValue)
+			riskText.innerText= riskValue+ "%"
+        }, 500);
+    </script>
+
+</body>
+</html>

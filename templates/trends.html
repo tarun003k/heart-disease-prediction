@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Early Detection of Heart Disease Through Predictive Machine Learning Models</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/256/2167/2167018.png" type="image/icon type">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background: #B2D8E9;
+      color: #0c0c0c;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .menu-icon {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: #0c0c0c;
+    }
+
+    .ls {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .ls li {
+      margin: 0 20px;
+    }
+
+    .ls li a {
+      color: #0c0c0c;
+      text-decoration: none;
+      padding: 5px 10px;
+      transition: background 0.3s;
+    }
+
+    .ls li a:hover {
+      background: #ffffff;
+      color: #0c0c0c;
+      border-radius: 2px;
+    }
+
+    .trend-section {
+      height: auto;
+      min-height: 105vh;
+      background-image: linear-gradient(
+          to bottom right, 
+          #000000fc, 
+          rgba(60, 60, 60, 0.3)
+        ),
+        url('../static/asserts/trends1.jpg'); /* Ensure the correct path */
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding-bottom: 30px;
+    }
+
+    /* Styles for the Trends Section */
+    .trend-section {
+      padding: 50px 10%;
+      background-color: #f4f4f4;
+    }
+
+    .trend-section h1 {
+      font-size: 45px;
+      text-align: center;
+      color: rgb(228, 221, 221); /* Changed to white */
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    .trend-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .trend-box {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trend-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .trend-box h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+      color: #3858e9;
+    }
+
+    .trend-box p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #393E46;
+      flex-grow: 1;
+    }
+    
+    .know-more-btn {
+      display: inline-block;
+      background-color: #B2D8E9;
+      color: #0c0c0c;
+      text-align: center;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 500;
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+    
+    .know-more-btn:hover {
+      background-color: #8ebfd5;
+    }
+
+    .footer {
+      background-color: #0c0c0c;
+      color: white;
+      width: 100%;
+      height: 60vh;
+      padding: 2% 0;
+    }
+
+    .footer h1 {
+      font-size: 35px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .footer .footer-info {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .footer-info div {
+      padding: 0;
+    }
+
+    .footer-info h1 {
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .footer-info p {
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .predict {
+      text-decoration: none;
+      background-color: #0c0c0c;
+      color: #a6acb7;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 20px;
+    }
+
+    .predict:hover {
+      background-color: #a6acb7;
+      color: #393E46;
+      transition: 0.3s;
+    }
+
+    .content div {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <p class="nav-title">Early Heart Disease Prediction</p>
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span id="menu-icon">&#9776;</span>
+    </div>
+    <ul class="ls" id="menu">
+      <li><a href="/" class="ancor">Home</a></li>
+      <li><a href="/about" class="ancor">Info</a></li>
+      <li><a href="/trends" class="ancor">Trends</a></li>
+      <li><a href="/article" class="ancor">Articles</a></li>
+      <li><a href="/team" class="ancor">Team Members</a></li>
+    </ul>
+  </nav>
+
+  <!-- Trends Section -->
+  <section class="trend-section">
+    <h1>Heart Disease Trends &amp; Technologies</h1>
+    <div class="trend-container">
+      <div class="trend-box">
+        <h2>AI for Early Detection</h2>
+        <p>Artificial Intelligence is being used for early detection of heart diseases through imaging and data analysis.</p>
+        <a href="https://www.youtube.com/results?search_query=ai+early+detection+heart+disease" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+      <div class="trend-box">
+        <h2>Wearable Health Devices</h2>
+        <p>Wearable devices help in continuous monitoring of heart rate, ECG, and other vital statistics in real-time.</p>
+        <a href="https://www.youtube.com/results?search_query=wearable+devices+heart+health+monitoring" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+      <div class="trend-box">
+        <h2>Genetic Research and Testing</h2>
+        <p>Genetic tests help in identifying individuals at higher risk for heart diseases based on their genetic predisposition.</p>
+        <a href="https://www.youtube.com/results?search_query=genetic+testing+heart+disease+risk" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+      <div class="trend-box">
+        <h2>Telemedicine</h2>
+        <p>Telemedicine enables remote consultations, helping doctors monitor patients and offer advice even in remote locations.</p>
+        <a href="https://www.youtube.com/results?search_query=telemedicine+heart+disease+management" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+      <div class="trend-box">
+        <h2>Advanced Imaging Technologies</h2>
+        <p>New imaging technologies like 3D echocardiography are allowing for more accurate and non-invasive diagnoses of heart conditions.</p>
+        <a href="https://www.youtube.com/results?search_query=advanced+cardiac+imaging+technologies" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div>
+      <h1>Heart Disease Prediction</h1>
+      <div class="footer-info">
+        <div>
+          <h1>Team Members</h1>
+          <p>VISWANADHAPALLI PAUL MOJESH</p>
+          <p>KOVVURI JAYA LAKSHMI</p>
+          <p>THARUN KUMAR MALLADI</p>
+          <p>DODDIPATLA RAVI TEJA</p>
+          <p>KARRI RAJESH</p>
+        </div>
+        <div>
+          <h1>Details</h1>
+          <p>2022-2026 Batch</p>
+          <p> CSE - Artificial Intelligence</p>
+          <p>Pragati Engineering College</p>
+        </div>
+      </div>
+      <hr style="margin-top: 4%; border-color: #393E46;">
+      <p style="text-align: center; font-size: 30px; text-transform: uppercase; font-weight: bold;">Batch@2025</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      let menu = document.getElementById("menu");
+      let icon = document.getElementById("menu-icon");
+      menu.classList.toggle("active");
+      icon.innerHTML = menu.classList.contains("active") ? "&#10006;" : "&#9776;";
+    }
+  </script>
+</body>
+</html>

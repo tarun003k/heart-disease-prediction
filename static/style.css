@@ -1,0 +1,412 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+nav {
+    background: #B2D8E9;
+    color: #0c0c0c;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.ls {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ls li {
+    margin: 0 20px;
+}
+
+.ls li a {
+    color:#0c0c0c;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background 0.3s;
+}
+
+.ls li a:hover {
+    background: #ffffff;
+    color: #0c0c0c;
+    border-radius: 2px;
+}
+
+
+.scale-container {
+    width: 80%;
+    max-width: 600px;
+    height: 30px;
+    background: #ddd;
+    border-radius: 15px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.scale-bar {
+    width: 0%;
+    height: 100%;
+    border-radius: 15px;
+    transition: width 2s ease-in-out, background 2s ease-in-out;
+}
+
+.labels {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    font-weight: bold;
+}
+
+.container {
+    padding: 40px;
+    padding-top: 0px;
+
+}
+.container h1{
+    font-size:40px;
+    text-transform: uppercase;
+    padding: 3% 1%;
+}
+h1, h2 {
+    color:  #0c0c0c;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.container {
+    width: 100%;
+    padding: 3px 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    color: #0c0c0c;
+    text-align: center;
+}
+
+.heading_font {
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.form-section {
+    background:  #f4f4f4;
+    padding: 1% 2%;
+    border-radius: 3px;
+}
+
+.ml-container {
+    width:70%;
+    padding: 3% 3%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-grid div {
+    display: flex;
+    flex-direction: column;
+    padding: 1% 7%;
+
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color:#0c0c0c;
+}
+
+input, select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+input, select:focus{
+    outline: none;
+}
+.my-cta-button {
+    width: 13%;
+    padding: 10px;
+    background: #B2D8E9;
+    color: #0c0c0c;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.my-cta-button:hover {
+    background: #0c0c0c;
+    color: white;
+    transition: 0.3s;
+}
+.pre-btn{
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer{
+    background-color: #0c0c0c;
+    color: white;
+    width: 100%;
+    height: 60vh;
+    padding: 2% 0px;
+   }
+   .footer h1{
+    font-size: 35px;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+   }
+   .footer .footer-info{
+    display: flex;
+    justify-content: space-around;
+   }
+   .footer-info div{
+    padding: 0px ;
+   }
+   .footer-info h1{
+    text-align: center;
+    font-size: 30px;
+   }
+   .footer-info p{
+    text-align: center;
+    font-size: 17px;
+   }
+
+@media (max-width: 820px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-icon {
+        display: block;
+        z-index: 3;
+        color: #0c0c0c;
+    }
+
+    .ls {
+        display: none;
+        flex-direction: column;
+        background: #B2D8E9;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .ls.active {
+        display: flex;
+    }
+
+    .ls li {
+        padding: 10px;
+        color: #0c0c0c;
+        border-bottom: 1px solid #B2D8E9;
+    }
+
+    .ls li:hover {
+        color: white;
+    }
+    .my-cta-button {
+        width: 100%;
+        max-width: 200px;
+        padding: 10px;
+        background: #B2D8E9;
+        color: #0c0c0c;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin: 10px auto;
+        display: block;
+    }
+    .footer{
+        height: 41vh;
+    }
+}
+
+@media (max-width:420px) {
+    .container {
+        padding: 40px;
+        padding-top: 0px;
+    
+    }
+    .container h1{
+        font-size:40px;
+        text-transform: uppercase;
+        padding: 3% 1%;
+    }
+    h1, h2 {
+        color:  #0c0c0c;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    .pre {
+        padding: 10px;
+    }
+    
+    .container {
+        width: 100%;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .container-heading {
+        font-size: 16px;
+        text-align: center;
+    }
+    
+    .ml-container {
+        width: 90%;
+        padding: 5%;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background: #f4f4f4;
+        border-radius: 3px;
+    }
+    
+    .form-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .form-grid div {
+        display: flex;
+        flex-direction: column;
+        padding: 3% 5%;
+    }
+    
+    label {
+        font-size: 14px;
+        font-weight: bold;
+    }
+    
+    input, select {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+    
+    input, select:focus {
+        outline: none;
+    }
+    
+    .pre-btn {
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .my-cta-button {
+        width: 80%;
+        max-width: 200px;
+        padding: 10px;
+        background: #B2D8E9;
+        color: #0c0c0c;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin: 10px auto;
+        display: block;
+    }
+    
+    .my-cta-button:hover {
+        background: #0c0c0c;
+        color: white;
+        transition: 0.3s;
+    }
+   .footer{
+    height: 85vh;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+}

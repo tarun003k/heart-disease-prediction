@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Early Detection of Heart Disease Through Predictive Machine Learning Models</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/256/2167/2167018.png" type="image/icon type">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #B2D8E9;
+    }
+
+    nav {
+      background: #B2D8E9;
+      color: #0c0c0c;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .nav-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .menu-icon {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: #0c0c0c;
+    }
+
+    .ls {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .ls li {
+      margin: 0 20px;
+    }
+
+    .ls li a {
+      color: #0c0c0c;
+      text-decoration: none;
+      padding: 5px 10px;
+      transition: background 0.3s;
+    }
+
+    .ls li a:hover {
+      background: #ffffff;
+      color: #0c0c0c;
+      border-radius: 2px;
+    }
+
+    .heart-disease {
+      height: auto;
+      min-height: 96vh;
+      background-image: linear-gradient(
+          to bottom right, 
+          rgba(0, 0, 0, 0.5), 
+          rgba(178, 216, 233, 0.3)
+        ),
+        url('../static/asserts/article.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding-bottom: 30px;
+      padding: 50px 5%;
+      background-color: #f4f4f4;
+    }
+
+    .heart-disease h1 {
+      font-size: 45px;
+      text-align: center;
+      color: #f8f4f4;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .card h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+      color: #3858e9;
+    }
+
+    .card p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #393E46;
+    }
+
+    .card .content {
+      font-size: 16px;
+      color: #393E46;
+      padding: 10px 0;
+      flex-grow: 1;
+    }
+    
+    .know-more-btn {
+      display: inline-block;
+      background-color: #B2D8E9;
+      color: #0c0c0c;
+      text-align: center;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 500;
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+    
+    .know-more-btn:hover {
+      background-color: #8ebfd5;
+    }
+
+    .footer {
+      background-color: #0c0c0c;
+      color: white;
+      width: 100%;
+      height: 60vh;
+      padding: 2% 0;
+    }
+
+    .footer h1 {
+      font-size: 35px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .footer .footer-info {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .footer-info div {
+      padding: 0;
+    }
+
+    .footer-info h1 {
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .footer-info p {
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .predict {
+      text-decoration: none;
+      background-color: #0c0c0c;
+      color: #a6acb7;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 20px;
+    }
+
+    .predict:hover {
+      background-color: #a6acb7;
+      color: #393E46;
+      transition: 0.3s;
+    }
+
+    .content div {
+      margin-bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-title {
+        font-size: 18px;
+      }
+
+      .ls {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .ls li {
+        margin: 10px 0;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      .heart-disease {
+        padding: 50px 15px;
+      }
+
+      .heart-disease h1 {
+        font-size: 35px;
+      }
+
+      .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .footer .footer-info {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-info div {
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .heart-disease h1 {
+        font-size: 28px;
+      }
+
+      .card h2 {
+        font-size: 22px;
+      }
+
+      .card p {
+        font-size: 16px;
+      }
+
+      .footer-info h1 {
+        font-size: 24px;
+      }
+
+      .footer-info p {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <p class="nav-title">Early Heart Disease Prediction</p>
+    <div class="menu-icon" onclick="toggleMenu()">
+      <span id="menu-icon">&#9776;</span>
+    </div>
+    <ul class="ls" id="menu">
+      <li><a href="/" class="ancor">Home</a></li>
+      <li><a href="/about" class="ancor">Info</a></li>
+      <li><a href="/trends" class="ancor">Trends</a></li>
+      <li><a href="/article" class="ancor">Articles</a></li>
+      <li><a href="/team" class="ancor">Team Members</a></li>
+    </ul>
+  </nav>
+
+  <!-- Heart Disease Types and Symptoms Section -->
+  <section class="heart-disease">
+    <h1>Heart Disease Types &amp; Symptoms</h1>
+    <div class="grid-container">
+      <div class="card">
+        <h2>Coronary Artery Disease</h2>
+        <div class="content">
+          <strong>Symptoms:</strong> Chest pain, shortness of breath. <br>
+          <strong>Precautions:</strong> Eat healthy, exercise regularly. <br>
+          <strong>Medications:</strong> Statins, blood thinners.
+        </div>
+        <a href="https://www.youtube.com/results?search_query=coronary+artery+disease+explained" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+
+      <div class="card">
+        <h2>Arrhythmia</h2>
+        <div class="content">
+          <strong>Symptoms:</strong> Palpitations, dizziness, chest discomfort. <br>
+          <strong>Precautions:</strong> Avoid caffeine, manage stress. <br>
+          <strong>Medications:</strong> Beta-blockers, antiarrhythmic drugs.
+        </div>
+        <a href="https://www.youtube.com/results?search_query=arrhythmia+heart+explained" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+
+      <div class="card">
+        <h2>Heart Failure</h2>
+        <div class="content">
+          <strong>Symptoms:</strong> Shortness of breath, fatigue. <br>
+          <strong>Precautions:</strong> Limit salt intake, avoid alcohol. <br>
+          <strong>Medications:</strong> Diuretics, ACE inhibitors.
+        </div>
+        <a href="https://www.youtube.com/results?search_query=heart+failure+explained" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+
+      <div class="card">
+        <h2>Heart Valve Disease</h2>
+        <div class="content">
+          <strong>Symptoms:</strong> Chest pain, fatigue. <br>
+          <strong>Precautions:</strong> Regular check-ups, control blood pressure. <br>
+          <strong>Medications:</strong> Blood thinners, ACE inhibitors.
+        </div>
+        <a href="https://www.youtube.com/results?search_query=heart+valve+disease+explained" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+
+      <div class="card">
+        <h2>Cardiomyopathy</h2>
+        <div class="content">
+          <strong>Symptoms:</strong> Shortness of breath, swelling in legs. <br>
+          <strong>Precautions:</strong> Healthy diet, avoid alcohol. <br>
+          <strong>Medications:</strong> Beta-blockers, diuretics.
+        </div>
+        <a href="https://www.youtube.com/results?search_query=cardiomyopathy+explained" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+
+      <div class="card">
+        <h2>Pericarditis</h2>
+        <div class="content">
+          <strong>Symptoms:</strong> Chest pain, fever. <br>
+          <strong>Precautions:</strong> Avoid infections, manage stress. <br>
+          <strong>Medications:</strong> Pain relievers, antibiotics.
+        </div>
+        <a href="https://www.youtube.com/results?search_query=pericarditis+explained" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+
+      <div class="card">
+        <h2>Aortic Aneurysm</h2>
+        <div class="content">
+          <strong>Symptoms:</strong> Severe chest or abdomen pain. <br>
+          <strong>Precautions:</strong> Regular screenings, control blood pressure. <br>
+          <strong>Medications:</strong> Blood pressure meds, cholesterol-lowering drugs.
+        </div>
+        <a href="https://www.youtube.com/results?search_query=aortic+aneurysm+explained" class="know-more-btn" target="_blank">Know More</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="footer">
+    <div>
+      <h1>Heart Disease Prediction</h1>
+      <div class="footer-info">
+        <div>
+          <h1>Team Members</h1>
+          <p>VISWANADHAPALLI PAUL MOJESH</p>
+          <p>KOVVURI JAYA LAKSHMI</p>
+          <p>THARUN KUMAR MALLADI</p>
+          <p>DODDIPATLA RAVI TEJA</p>
+          <p>KARRI RAJESH</p>
+        </div>
+        <div>
+          <h1>Details</h1>
+          <p>2022-2026 Batch</p>
+          <p> CSE - Artificial Intelligence</p>
+          <p>Pragati Engineering College</p>
+        </div>
+      </div>
+      <hr style="margin-top: 4%; border-color: #393E46;">
+      <p style="text-align: center; font-size: 30px; text-transform: uppercase; font-weight: bold;">Batch@2025</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      let menu = document.getElementById("menu");
+      let icon = document.getElementById("menu-icon");
+      menu.classList.toggle("active");
+      icon.innerHTML = menu.classList.contains("active") ? "&#10006;" : "&#9776;";
+    }
+  </script>
+</body>
+</html>

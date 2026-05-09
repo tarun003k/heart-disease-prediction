@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Detection of Heart Disease Through Predictive Machine Learning Models</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/256/2167/2167018.png" type="image/icon type">
+    <link rel="stylesheet" href="../static/style.css">
+    <style>
+        .tooltip-container {
+            display: flex;
+            align-items: center;
+        }
+        .form-error {
+            background: #ffe6e6;
+            color: #900;
+            border: 1px solid #f5c2c2;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .tooltip-container label {
+            margin-right: 10px;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip-icon {
+            background-color: #B2D8E9;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+  <nav>
+    <p class="nav-title">Early Heart Disease Prediction</p>
+    <div class="menu-icon" onclick="toggleMenu()">
+        <span id="menu-icon">&#9776;</span> 
+    </div>
+    <ul class="ls" id="menu">
+        <li><a href="/" class="ancor">Home</a></li>
+        <li><a href="/about" class="ancor">Info</a></li>
+        <li><a href="/trends" class="ancor">Trends</a></li>
+        <li><a href="/article" class="ancor">Articles</a></li>
+        <li><a href="/team" class="ancor">Team Members</a></li>
+    </ul>
+</nav>
+
+<div class="pre">
+  <div class="form-section">
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <h2 class='container-heading'><span class="heading_font"> 🫀 Heart Disease Predictor 🫀</span></h2>
+        </div>
+      </div>
+    </header>
+  
+    <section class="form-section">
+      <div class="container">
+        <div class="ml-container">
+          <form action="{{ url_for('predict')}}" method="POST">
+            <div class="form-grid">
+              {% if error %}
+                <div class="form-error">{{ error }}</div>
+              {% endif %}
+              <div>
+                <div class="tooltip-container">
+                    <label for="age">Age</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Enter your current age in years. 
+                            <p>Age is a critical factor in assessing heart disease risk, as the likelihood of heart problems increases with age.</p>
+                            <p>Typical range: 20-100 years</p>
+                        </span>
+                    </div>
+                </div>
+                <input type="text" id="age" name="age" placeholder="Your age.." required>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="sex">Sex</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Select your biological sex. Men and women can have different risk factors and presentations of heart disease.
+                            <P> - Male: 1 (Higher risk of heart disease at younger ages)</P>
+                            <p> - Female: 0 (Risk increases after menopause)</p>
+                        </span>
+                    </div>
+                </div>
+                <select id="sex" name="sex" required>
+                    <option value="" disabled selected hidden>----select option----</option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="cp">Chest Pain Type</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Describe the type of chest pain you're experiencing:
+                            <p> 1. Typical Angina: Chest pain related to physical activity or stress, relieved by rest</p>
+                            <p> 2. Atypical Angina: Chest discomfort that doesn't follow typical angina patterns</p>
+                            <p> 3. Non-anginal Pain: Chest pain not related to heart issues (e.g., muscular, respiratory)</p>
+                            <p> 4. Asymptomatic: No chest pain present</p>
+                        </span>
+                    </div>
+                </div>
+                <select id="cp" name="cp" required>
+                    <option value="" disabled selected hidden>----select option----</option>
+                    <option value="0">Typical Angina</option>
+                    <option value="1">Atypical Angina</option>
+                    <option value="2">Non-anginal Pain</option>
+                    <option value="3">Asymptomatic</option>
+                </select>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="trestbps">Resting Blood Pressure</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Measure your resting blood pressure in mmHg (millimeters of mercury).
+                            <p>- Normal range: 94-120 mmHg</p>
+                            <p>- High blood pressure (Hypertension): Above 140 mmHg</p>
+                            <p>- This measurement indicates the pressure in your arteries when your heart is at rest.</p>
+                        </span>
+                    </div>
+                </div>
+                <input type="text" id="trestbps" name="trestbps" placeholder="A number in range [94-200] mmHg" required>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="chol">Serum Cholesterol</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Your total cholesterol level in mg/dl:
+                            <p> - Desirable: Less than 200 mg/dl</p>
+                            <p> - Borderline high: 200-239 mg/dl</p>
+                            <p> - High: 240 mg/dl and above</p>
+                            <p> - Higher cholesterol levels increase the risk of heart disease.</p>
+                        </span>
+                    </div>
+                </div>
+                <input type="text" id="chol" name="chol" placeholder="A number in range [126-564] mg/dl" required>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="fbs">Fasting Blood Sugar</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Indicates your blood sugar level after fasting:
+                            <p>- Less than 120 mg/dl: Normal</p>
+                            <p>- Greater than 120 mg/dl: Potential indicator of diabetes</p>
+                            <p>- High blood sugar can damage blood vessels and increase heart disease risk.</p>
+                        </span>
+                    </div>
+                </div>
+                <select id="fbs" name="fbs" required>
+                    <option value="" disabled selected hidden>----select option----</option>
+                    <option value="1">Greater than 120 mg/dl</option>
+                    <option value="0">Less than 120 mg/dl</option>
+                </select>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="restecg">Resting ECG Results</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Resting Electrocardiogram (ECG) results:
+                            <p>- Normal: No abnormalities detected</p>
+                            <p>- ST-T wave abnormality: Possible heart muscle stress or damage</p>
+                            <p>- Left ventricular hypertrophy: Thickening of heart's main pumping chamber</p>
+                        </span>
+                    </div>
+                </div>
+                <select id="restecg" name="restecg" required>
+                    <option value="" disabled selected hidden>----select option----</option>
+                    <option value="0">Normal</option>
+                    <option value="1">Having ST-T wave abnormality</option>
+                    <option value="2">Probable or definite left ventricular hypertrophy</option>
+                </select>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="thalach">Max Heart Rate</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Maximum heart rate achieved during exercise:
+                            <p>- Normal range: 71-202 beats per minute (bpm)</p>
+                            <p>- Calculated as 220 minus your age</p>
+                            <p>- Lower maximum heart rate can indicate reduced cardiovascular fitness.</p>
+                        </span>
+                    </div>
+                </div>
+                <input type="text" id="thalach" name="thalach" placeholder="A number in range [71-202] bpm" required>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="exang">Exercise-induced Angina</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Do you experience chest pain during physical activity?
+                            <p> - Yes: Chest pain triggered by exercise</p>
+                            <p> - No: No chest pain during physical activity</p>
+                            <p> - Exercise-induced angina can be a sign of reduced blood flow to the heart.</p>
+                        </span>
+                    </div>
+                </div>
+                <select id="exang" name="exang" required>
+                    <option value="" disabled selected hidden>----select option----</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="oldpeak">ST Depression</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            ST depression measured during exercise:
+                            <p>- Typical range: 0-6.2</p>
+                            <p>- Indicates changes in the heart's electrical activity</p>
+                            <p>- Higher values may suggest reduced blood flow to the heart or other cardiac issues.</p>
+                        </span>
+                    </div>
+                </div>
+                <input type="text" id="oldpeak" name="oldpeak" placeholder="ST depression, typically in [0-6.2]" required>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="slope">Slope of the Peak Exercise ST Segment</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Shape of the ST segment during exercise:
+                            <p>- Upsloping: Gradual, gentle rise (generally least concerning)</p>
+                            <p>- Flat: No significant change</p>
+                            <p>- Downsloping: Decline, which can indicate potential heart problems</p>
+                        </span>
+                    </div>
+                </div>
+                <select id="slope" name="slope" required>
+                    <option value="" disabled selected hidden>----select option----</option>
+                    <option value="0">Upsloping</option>
+                    <option value="1">Flat</option>
+                    <option value="2">Downsloping</option>
+                </select>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="ca">Number of Major Vessels</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Number of major blood vessels colored by fluoroscopy:
+                            <p>- Range: 0-4 major vessels
+                            <p>- Fewer vessels can indicate blockages or reduced blood flow</p>
+                            <p>- Each vessel represents a potential site of cardiovascular concern.</p>
+                        </span>
+                    </div>
+                </div>
+                <input type="text" id="ca" name="ca" placeholder="Typically in [0-4]" required>
+              </div>
+              <div>
+                <div class="tooltip-container">
+                    <label for="thal">Thalassemia</label>
+                    <div class="tooltip">
+                        <span class="tooltip-icon">?</span>
+                        <span class="tooltiptext">
+                            Thalassemia test results:
+                            <p>- Normal: No significant heart-related thalassemia issues</p>
+                            <p>- Fixed Defect: Permanent abnormality in heart muscle</p>
+                            <p>- Reversible Defect: Temporary or treatable heart muscle abnormality</p>
+                        </span>
+                    </div>
+                </div>
+                <select id="thal" name="thal" required>
+                    <option value="" disabled selected hidden>----select option----</option>
+                    <option value="0">Normal</option>
+                    <option value="1">Fixed Defect</option>
+                    <option value="2">Reversible Defect</option>
+                </select>
+              </div>
+            </div>
+            <div class="pre-btn">
+              <input type="submit" class="my-cta-button" value="Predict">
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    let menu = document.getElementById("menu");
+    let icon = document.getElementById("menu-icon");
+
+    menu.classList.toggle("active");
+
+    if (menu.classList.contains("active")) {
+        icon.innerHTML = "&#10006;";
+    } else {
+        icon.innerHTML = "&#9776;";
+    }
+}
+</script>
+</body>
+</html>

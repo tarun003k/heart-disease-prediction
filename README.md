@@ -1,57 +1,80 @@
-import pickle
-from pathlib import Path
+# Heart Disease Prediction
 
-import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+A small Flask web application demonstrating a Random Forest classifier trained on the Cleveland heart-disease dataset. It provides informational pages, a form for a model estimate, and a downloadable PDF summary.
 
-BASEDIR = Path(__file__).resolve().parent
-DATASET_PATH = BASEDIR / 'heart_cleveland_upload.csv'
-MODEL_PATH = BASEDIR / 'heart_disease_model.pkl'
-SCALER_PATH = BASEDIR / 'scaler.pkl'
+> **Medical disclaimer:** This is an educational project, not a medical device. Its output is not a diagnosis, medical advice, or a substitute for professional care. Do not use it to make health decisions.
 
+## Repository structure
 
-def main():
-    if not DATASET_PATH.exists():
-        raise FileNotFoundError(f'Dataset not found: {DATASET_PATH}. Add the heart disease CSV before training.')
+```text
+.
+├── app.py                         # Flask web application
+├── prediction.py                  # Model training and evaluation script
+├── Heart_disease_cleveland_new.csv # Dataset used by the training script
+├── requirements.txt               # Python dependencies
+├── Procfile                       # Gunicorn start command
+├── static/                        # CSS and image assets
+└── templates/                     # Jinja HTML templates
+```
 
-    heart = pd.read_csv(DATASET_PATH)
-    if 'condition' in heart.columns:
-        heart_df = heart.rename(columns={'condition': 'target'})
-    elif 'target' in heart.columns:
-        heart_df = heart.copy()
-    else:
-        raise ValueError('Dataset must contain a "condition" or "target" column for training.')
+Training creates `heart_disease_model.pkl` and `scaler.pkl` in the project root. They are ignored by Git and must be generated locally (or separately provided) before prediction requests can work.
 
-    X = heart_df.drop(columns='target')
-    y = heart_df['target']
+## Setup
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+Use Python 3.9 or later and create a virtual environment:
 
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
+```bash
+python -m venv .venv
+```
 
-    model = RandomForestClassifier(n_estimators=20, random_state=42)
-    model.fit(X_train_scaled, y_train)
+Activate it on macOS/Linux:
 
-    y_pred = model.predict(X_test_scaled)
-    accuracy = accuracy_score(y_test, y_pred)
-    print(f'Accuracy: {accuracy * 100:.2f}%')
-    print('Classification Report:\n', classification_report(y_test, y_pred))
-    print('Confusion Matrix:\n', confusion_matrix(y_test, y_pred))
+```bash
+source .venv/bin/activate
+```
 
-    with MODEL_PATH.open('wb') as model_file:
-        pickle.dump(model, model_file)
-    with SCALER_PATH.open('wb') as scaler_file:
-        pickle.dump(scaler, scaler_file)
+On Windows PowerShell:
 
-    print(f'Model saved to: {MODEL_PATH}')
-    print(f'Scaler saved to: {SCALER_PATH}')
+```powershell
+.venv\Scripts\Activate.ps1
+```
 
+Install dependencies:
 
-if __name__ == '__main__':
-    main()
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
 
+## Train the model
+
+From the repository root, run:
+
+```bash
+python prediction.py
+```
+
+The script reads `Heart_disease_cleveland_new.csv`, checks for the 13 feature columns plus `target`, reports holdout metrics, then writes `heart_disease_model.pkl` and `scaler.pkl`.
+
+## Run the application
+
+```bash
+python app.py
+```
+
+Open <http://127.0.0.1:5000>. The app's home and information pages can load without model files; prediction requests require successful model training first.
+
+For deployment with Gunicorn, set a strong `SECRET_KEY` environment variable and use:
+
+```bash
+gunicorn app:app
+```
+
+Do not use the development server or a fallback secret in production.
+
+## Notes and limitations
+
+- The dataset is committed as supplied; verify its source, terms of use, feature encodings, and data quality before reuse.
+- The displayed class/probability is a model output, not a clinically validated risk estimate. A small holdout score does not demonstrate clinical usefulness.
+- Input ranges and category labels should be checked against the exact dataset encoding before using the form. The UI currently needs review to ensure its descriptions match the dataset's numeric values.
+- No automated tests or license file are included yet. Add tests for training, form validation, routes, and PDF generation, and add an appropriate license if you intend to distribute the project.

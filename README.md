@@ -1,108 +1,57 @@
-# Heart Disease Prediction
+import pickle
+from pathlib import Path
 
-A Flask web application that uses a scikit-learn Random Forest model to estimate a heart-disease risk category from clinical input fields. It includes informational pages and can generate a PDF report for a prediction.
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
-> **Medical disclaimer:** This project is for educational and demonstration purposes only. It is not a medical device and does not provide a diagnosis or replace advice from a qualified healthcare professional. Do not use its predictions to make medical decisions.
+BASEDIR = Path(__file__).resolve().parent
+DATASET_PATH = BASEDIR / 'heart_cleveland_upload.csv'
+MODEL_PATH = BASEDIR / 'heart_disease_model.pkl'
+SCALER_PATH = BASEDIR / 'scaler.pkl'
 
-## Project status and files needed
 
-The repository currently does **not** contain the files that the application expects at startup:
+def main():
+    if not DATASET_PATH.exists():
+        raise FileNotFoundError(f'Dataset not found: {DATASET_PATH}. Add the heart disease CSV before training.')
 
-- `heart_disease_model.pkl`
-- `scaler.pkl`
+    heart = pd.read_csv(DATASET_PATH)
+    if 'condition' in heart.columns:
+        heart_df = heart.rename(columns={'condition': 'target'})
+    elif 'target' in heart.columns:
+        heart_df = heart.copy()
+    else:
+        raise ValueError('Dataset must contain a "condition" or "target" column for training.')
 
-As a result, `app.py` will fail while loading the model until these artifacts are provided. The training script, `prediction.py`, also expects `heart_cleveland_upload.csv` in the project root; that dataset is not currently included either. Obtain the dataset from a source you are authorized to use, and verify its schema before training. Do not commit sensitive or restricted data, or model artifacts from an untrusted source.
+    X = heart_df.drop(columns='target')
+    y = heart_df['target']
 
-The repository includes `requirements.txt` and a `Procfile` for Gunicorn-based deployment. The README documents the intended setup, but the missing dataset and model artifacts must be addressed before the application can run.
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-## Requirements
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
 
-- Python 3.9 or later (use a Python version supported by the installed scikit-learn release)
-- pip
-- The dataset and generated model files described above
+    model = RandomForestClassifier(n_estimators=20, random_state=42)
+    model.fit(X_train_scaled, y_train)
 
-## Setup
+    y_pred = model.predict(X_test_scaled)
+    accuracy = accuracy_score(y_test, y_pred)
+    print(f'Accuracy: {accuracy * 100:.2f}%')
+    print('Classification Report:\n', classification_report(y_test, y_pred))
+    print('Confusion Matrix:\n', confusion_matrix(y_test, y_pred))
 
-1. Clone the repository and change into its directory:
+    with MODEL_PATH.open('wb') as model_file:
+        pickle.dump(model, model_file)
+    with SCALER_PATH.open('wb') as scaler_file:
+        pickle.dump(scaler, scaler_file)
 
-   ```bash
-   git clone https://github.com/tarun003k/heart-disease-prediction.git
-   cd heart-disease-prediction
-   ```
+    print(f'Model saved to: {MODEL_PATH}')
+    print(f'Scaler saved to: {SCALER_PATH}')
 
-2. Create and activate a virtual environment:
 
-   ```bash
-   python -m venv .venv
-   ```
+if __name__ == '__main__':
+    main()
 
-   On macOS/Linux:
-
-   ```bash
-   source .venv/bin/activate
-   ```
-
-   On Windows PowerShell:
-
-   ```powershell
-   .venv\Scripts\Activate.ps1
-   ```
-
-3. Install dependencies:
-
-   ```bash
-   python -m pip install --upgrade pip
-   pip install -r requirements.txt
-   ```
-
-## Train the model
-
-Place a compatible `heart_cleveland_upload.csv` file in the project root. The current training script expects a `condition` target column and the 13 feature columns used by the prediction form. Then run:
-
-```bash
-python prediction.py
-```
-
-The script trains a Random Forest classifier and writes `heart_disease_model.pkl` and `scaler.pkl` in the current directory. Keep both generated files alongside `app.py`; the application loads them during startup. Only load pickle files you trust, since unpickling an untrusted file can execute code.
-
-The model's evaluation output is printed by the training script. Treat its reported metrics as a basic holdout estimate, not evidence of clinical validity.
-
-## Run the web app
-
-Once both model files exist in the project root:
-
-```bash
-python app.py
-```
-
-Open <http://127.0.0.1:5000> in your browser. The repository also contains a `Procfile` configured to run the app with Gunicorn:
-
-```bash
-gunicorn app:app
-```
-
-## Application pages
-
-- `/` — home page
-- `/prediction` — prediction form
-- `/about` — project information
-- `/trends` — trends page
-- `/article` — article page
-- `/team` — team page
-- `/predict` — handles submitted prediction form data
-- `/download_report` — downloads a PDF report for the current session's prediction
-
-## Prediction inputs
-
-The form collects 13 fields: age, sex, chest-pain type (`cp`), resting blood pressure (`trestbps`), cholesterol (`chol`), fasting blood sugar (`fbs`), resting ECG (`restecg`), maximum heart rate (`thalach`), exercise-induced angina (`exang`), ST depression (`oldpeak`), ST-segment slope (`slope`), number of major vessels (`ca`), and thalassemia result (`thal`). Input encoding and feature order must match the dataset/model used for training.
-
-## Important deployment notes
-
-- Replace the placeholder Flask session secret in `app.py` with a strong secret supplied through an environment variable before deploying. Do not commit production secrets.
-- Disable Flask debug mode in production. Use a production WSGI server such as the Gunicorn command in the `Procfile`.
-- Validate input ranges and model/data compatibility before relying on predictions; the current server primarily checks that values are present and numeric.
-- Risk estimates are not a substitute for clinical assessment. Have a qualified professional evaluate any health concerns.
-
-## License
-
-No license file is currently included. Contact the repository owner before reusing or distributing this project.
